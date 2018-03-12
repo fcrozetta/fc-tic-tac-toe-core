@@ -36,7 +36,7 @@ namespace fc_tic_tac_toe_core
 
             
             t.Body = BoardDraw ;
-            t.DrawOk(); // TODO: THis should not stop, just draw the box
+            t.Draw();
 
             int rowTmp = RowsToGoDown;
             for (int i = 0; i < 3; i++)
