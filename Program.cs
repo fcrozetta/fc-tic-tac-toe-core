@@ -47,6 +47,8 @@ namespace fc_tic_tac_toe_core
             }
 
             string row = UserInput.DrawInput();
+
+            Console.CursorVisible = true;
         }
     }
 }
