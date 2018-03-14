@@ -6,24 +6,86 @@ namespace fc_tic_tac_toe_core
 {
     class Program
     {
+        public static bool player1 = true;
+        public static int numPlayer = 1;
+        public static int RowsToGoDown = 13;
+        public static int colsToGoRight = 8;
 
-        public static String[,] Board = {   {" "," "," "},
-                                            {" "," "," "},
-                                            {" "," "," "}
-                                        };
-    public static string BoardDraw = " \n  \n  \n  \n  \n  \n  \n  \n  \n      1   2   3 \n \n A      |   |    \n     ---+---+--- \n B      |   |    \n     ---+---+--- \n C      |   |     ";
+        public static String[,] BoardEmpty ={   {" "," "," "},
+                                                {" "," "," "},
+                                                {" "," "," "}
+                                            };
+        public static String[,] Board;
+        public static string BoardDraw = " \n  \n  \n  \n  \n  \n  \n  \n  \n      1   2   3 \n \n A      |   |    \n     ---+---+--- \n B      |   |    \n     ---+---+--- \n C      |   |     ";
 
         public static void Quit(int errNum=0){
             Console.CursorVisible = true;
             Environment.Exit(errNum);
         }
 
+        private static void VictoryCondition(){
+            // * This is opposite, because we check the last player move
+            string charPlayer = player1 ? "O" : "X";
+            bool flagNewGame = false;
+            Tui victory = new Tui(50, 10)
+            {
+                Title = "Game Over"
+            };
+
+            if (
+                // * Top left Corner
+                (Board[0, 0] == charPlayer && Board[0,1] == charPlayer && Board[0,2] == charPlayer) || //Horizontal top
+                (Board[0, 0] == charPlayer && Board[1,1] == charPlayer && Board[2,2] == charPlayer) || //Diagonal top left ~ bottom right
+                (Board[0, 0] == charPlayer && Board[1,0] == charPlayer && Board[2,0] == charPlayer) || //Vertical Left 
+                // * Middle left
+                (Board[1, 0] == charPlayer && Board[1,1] == charPlayer && Board[1,2] == charPlayer) || //Horizontal middle
+                // * Bottom left
+                (Board[2, 0] == charPlayer && Board[2,1] == charPlayer && Board[2,2] == charPlayer) || //horizontal bottom 
+                (Board[2, 0] == charPlayer && Board[2,1] == charPlayer && Board[2,2] == charPlayer) || //Vertical Left 
+                (Board[2, 0] == charPlayer && Board[1,1] == charPlayer && Board[0,2] == charPlayer) || //Diagonal bottom left ~ top right
+                // * Top middle
+                (Board[0, 1] == charPlayer && Board[1,1] == charPlayer && Board[2,1] == charPlayer) || //Vertical middle
+                // * Top right
+                (Board[0, 2] == charPlayer && Board[1,2] == charPlayer && Board[2,2] == charPlayer)    // Vertical right
+                
+            )
+            {
+                flagNewGame = true;
+                victory.Body = $"'{charPlayer}' Won! \n \n ";
+
+            }else if (
+                // * Board Full, no winners
+                Board[0, 0] == " " && Board[0, 1] == " " && Board[0, 2] == " " &&
+                Board[1, 0] == " " && Board[1, 1] == " " && Board[1, 2] == " " &&
+                Board[2, 0] == " " && Board[2, 1] == " " && Board[2, 2] == " ")
+            {
+                flagNewGame = true;
+                victory.Body = "No winners! \n \n ";
+            }
+
+
+            if (flagNewGame)
+            {
+                victory.Body += $"Play Again?";
+                if (victory.DrawYesNo(Tui.ColorSchema.System, "Yes", "No", true))
+                {
+                    Board = BoardEmpty;
+                    numPlayer = 1;
+                    player1 = true;
+                }else
+                {
+                    Quit();
+                }
+
+            }
+
+        }
+
         static void Main(string[] args)
         {
             Tui.ColorSchema inputColor = Tui.ColorSchema.Info;
-            bool player1 = true;
-            int RowsToGoDown = 13;
-            int colsToGoRight = 8;
+            Board = (string[,])BoardEmpty.Clone();
+
             Console.CursorVisible = false;
             Tui UserInput = new Tui(50, 10) { 
                 Title = "Player 1" ,
@@ -35,6 +97,8 @@ namespace fc_tic_tac_toe_core
                 Body  = "Welcome to Tic Tac Toe! \n This is a game for 2 Players. \n Enjoy"
             };
             t.DrawOk();
+
+
 
             while (true)
             {
@@ -67,6 +131,7 @@ namespace fc_tic_tac_toe_core
                     player1 = !player1;
 
                 }
+                VictoryCondition();
                 
             }
 
