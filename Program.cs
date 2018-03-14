@@ -55,9 +55,9 @@ namespace fc_tic_tac_toe_core
 
             }else if (
                 // * Board Full, no winners
-                Board[0, 0] == " " && Board[0, 1] == " " && Board[0, 2] == " " &&
-                Board[1, 0] == " " && Board[1, 1] == " " && Board[1, 2] == " " &&
-                Board[2, 0] == " " && Board[2, 1] == " " && Board[2, 2] == " ")
+                Board[0, 0] != " " && Board[0, 1] != " " && Board[0, 2] != " " &&
+                Board[1, 0] != " " && Board[1, 1] != " " && Board[1, 2] != " " &&
+                Board[2, 0] != " " && Board[2, 1] != " " && Board[2, 2] != " ")
             {
                 flagNewGame = true;
                 victory.Body = "No winners! \n \n ";
@@ -102,6 +102,7 @@ namespace fc_tic_tac_toe_core
 
             while (true)
             {
+                VictoryCondition();
                 int numPlayer = (player1?1:2);
                 UserInput.Title = $"Player {numPlayer}";
                 t.Body = BoardDraw ;
@@ -131,7 +132,7 @@ namespace fc_tic_tac_toe_core
                     player1 = !player1;
 
                 }
-                VictoryCondition();
+                
                 
             }
 
