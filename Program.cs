@@ -6,18 +6,31 @@ namespace fc_tic_tac_toe_core
 {
     class Program
     {
+
+        // ! player1 and numPlayer should be used in a simpler way, because this is not a good way. But it's late now.
         public static bool player1 = true;
         public static int numPlayer = 1;
+
+        // * Those are used to move Board around
         public static int RowsToGoDown = 13;
         public static int colsToGoRight = 8;
 
+        // * Template board, so i just copy to the board to create a new game...
+        // ? Is this lazy or smart?
         public static String[,] BoardEmpty ={   {" "," "," "},
                                                 {" "," "," "},
                                                 {" "," "," "}
                                             };
         public static String[,] Board;
+
+        // * This is a simple way to draw the board lines. Don't mess with this string
         public static string BoardDraw = " \n  \n  \n  \n  \n  \n  \n  \n  \n      1   2   3 \n \n A      |   |    \n     ---+---+--- \n B      |   |    \n     ---+---+--- \n C      |   |     ";
 
+
+        /// <summary>
+        /// Show the cursor again. this is good.
+        /// </summary>
+        /// <param name="errNum"></param>
         public static void Quit(int errNum=0){
             Console.CursorVisible = true;
             Environment.Exit(errNum);
