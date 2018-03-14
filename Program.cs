@@ -29,6 +29,7 @@ namespace fc_tic_tac_toe_core
 
         /// <summary>
         /// Show the cursor again. this is good.
+        /// Also, quit the game
         /// </summary>
         /// <param name="errNum"></param>
         public static void Quit(int errNum=0){
@@ -96,6 +97,7 @@ namespace fc_tic_tac_toe_core
 
         static void Main(string[] args)
         {
+            // * Settings
             Tui.ColorSchema inputColor = Tui.ColorSchema.Info;
             Board = (string[,])BoardEmpty.Clone();
 
@@ -112,7 +114,7 @@ namespace fc_tic_tac_toe_core
             t.DrawOk();
 
 
-
+            // *
             while (true)
             {
                 VictoryCondition();
